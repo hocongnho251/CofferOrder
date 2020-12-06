@@ -7,9 +7,11 @@ import {
   Button,
   TouchableHighlight,
   Image,
-  Alert
+  Alert,
+  ImageBackground
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { Actions } from 'react-native-router-flux';
 
 import HeaderBar from '../components/HeaderBar'
 class Menu extends React.Component {
@@ -25,27 +27,48 @@ class Menu extends React.Component {
   onLogin = () => {
     Alert.alert("Alert", "Button presses Login");
   }
+  goToLobbyBoard = () => {
+    Actions.lobby();
+  }
 
   render() {
     return (
       <View style={styles.container}>
+      <ImageBackground source={require("../assets/images/background.png")} style={styles.image} >
       <HeaderBar titleHeader="Menu" hasLogout={true}></HeaderBar>
        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.titleText} >Manager Board</Text>
         </View>
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
-              <Text style={styles.loginText}>Lobby Board</Text>
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.goToLobbyBoard()}>
+          <View style={styles.titleButton}>
+            <Image
+              source={require('../assets/images/icon-home.png')}
+              style={styles.iconMenu} resizeMode="contain"
+            />
+            <Text style={styles.loginText}>Lobby Board</Text>
+          </View>
         </TouchableHighlight>
         <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
-        <View style={styles.button}>
-          <Text style={styles.loginText}>Cashier Board</Text>
-        </View>
+         <View style={styles.titleButton}>
+            <Image
+              source={require('../assets/images/icon-cashier.png')}
+              style={styles.iconMenu} resizeMode="contain"
+            />
+            <Text style={styles.loginText}>Cashier Board</Text>
+          </View>
         </TouchableHighlight>
         <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
-          <Text style={styles.loginText}>Menu Setting</Text>
+           <View style={styles.titleButton}>
+            <Image
+              source={require('../assets/images/icon-setting.png')}
+              style={styles.iconMenu} resizeMode="contain"
+            />
+            <Text style={styles.loginText}>Menu Setting</Text>
+          </View>
         </TouchableHighlight>
       </ScrollView>
+      </ImageBackground>
       </View>
     );
   }
@@ -56,7 +79,6 @@ export default Menu;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E2CEB2',
   },
   contentContainer: {
     paddingTop: 30,
@@ -65,9 +87,7 @@ const styles = StyleSheet.create({
   },
    buttonContainer: {
     height:58,
-    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
     marginBottom:40,
     width:300,
     borderRadius:6,
@@ -76,7 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#25403B",
   },
   loginText: {
-    color: 'white',
+    color: '#E2CEB2',
     fontSize: 20,
     fontFamily: "Quicksand-Bold"
   },
@@ -88,5 +108,19 @@ const styles = StyleSheet.create({
   titleContainer:{
     marginBottom: 50,
     marginTop: 100,
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
+  iconMenu: {
+    width: 28,
+    height: 28
+  },
+  titleButton:{
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   }
 });

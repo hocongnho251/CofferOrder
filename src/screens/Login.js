@@ -8,7 +8,8 @@ import {
   TouchableHighlight,
   Image,
   Alert,
-  ScrollView
+  ScrollView,
+  ImageBackground
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
@@ -32,6 +33,7 @@ class Login extends React.Component {
     return (
       <View style={styles.container}>
         <HeaderBar titleHeader="Login" ></HeaderBar>
+        <ImageBackground source={require("../assets/images/background.png")} style={styles.image} >
           <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             <View style={styles.titleContainer}>
               <Text style={styles.titleText} >Login</Text>
@@ -42,23 +44,20 @@ class Login extends React.Component {
                   keyboardType="email-address"
                   onChangeText={(email) => this.setState({email})}/>
             </View>
-          
             <View style={styles.inputContainer}>
               <TextInput style={styles.inputs}
                   placeholder="Password"
                   secureTextEntry={true}
                   onChangeText={(password) => this.setState({password})}/>
             </View>
-
             <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onLogin()}>
               <Text style={styles.forgotText} >Forgot password?</Text>
             </TouchableHighlight>
-
             <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
               <Text style={styles.loginText}>Login</Text>
             </TouchableHighlight>
-
-        </ScrollView> 
+          </ScrollView>
+        </ImageBackground>
       </View>
 
     );
@@ -70,7 +69,6 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E2CEB2',
   },
   contentContainer: {
     paddingTop: 30,
@@ -115,7 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#25403B",
   },
   loginText: {
-    color: 'white',
+    color: '#E2CEB2',
     fontSize: 20,
     fontFamily: "Quicksand-Bold"
   },
@@ -132,5 +130,10 @@ const styles = StyleSheet.create({
   titleContainer:{
     marginBottom: 50,
     marginTop: 100,
-  }
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
 });

@@ -12,6 +12,7 @@ import Login from './src/screens/Login'
 import Menu from './src/screens/Menu'
 import { Router, Scene } from 'react-native-router-flux';
 import { StyleSheet, Text, View, Image } from 'react-native';
+import LobbyBoard from './src/screens/LobbyBoard';
 
 const App: () => React$Node = () => {
   const firebaseConfig = {
@@ -42,6 +43,12 @@ const App: () => React$Node = () => {
           key="menu"
           component={Menu}
           title="Menu"
+          hideNavBar={true}
+        />
+        <Scene
+          key="lobby"
+          component={LobbyBoard}
+          title="Lobby Board"
           hideNavBar={true}
         />
       </Scene>

@@ -37,7 +37,7 @@ class HeaderBar extends React.Component {
           {hasGoBack &&
             <TouchableOpacity onPress={this.handleGoBack}>
               <Image
-                source={require('../assets/images/icon-go-back.png')}
+                source={require('../assets/images/icon-back.png')}
                 style={styles.menu} resizeMode="contain"
               />
             </TouchableOpacity>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   title: {
-    color: '#FFFF',
+    color: '#E2CEB2',
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 8,
