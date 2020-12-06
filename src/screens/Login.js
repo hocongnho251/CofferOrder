@@ -9,7 +9,6 @@ import {
   Image,
   Alert
 } from 'react-native';
-
 class Login extends React.Component {
 
   constructor(props) {
@@ -20,42 +19,39 @@ class Login extends React.Component {
     }
   }
 
-  onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed "+viewId);
+  onLogin = () => {
+    Alert.alert("Alert", "Button presses Login");
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText} >Login</Text>
+        </View>
         <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
           <TextInput style={styles.inputs}
               placeholder="Email"
               keyboardType="email-address"
-              underlineColorAndroid='transparent'
               onChangeText={(email) => this.setState({email})}/>
         </View>
         
         <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
           <TextInput style={styles.inputs}
               placeholder="Password"
               secureTextEntry={true}
-              underlineColorAndroid='transparent'
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
+        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onLogin()}>
+          <Text style={styles.forgotText} >Forgot password?</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
-            <Text>Forgot your password?</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
-            <Text>Register</Text>
-        </TouchableHighlight>
+       
       </View>
     );
   }
@@ -68,16 +64,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#DCDCDC',
+    backgroundColor: '#E2CEB2',
   },
   inputContainer: {
-      borderBottomColor: '#F5FCFF',
+      borderBottomColor: '#FFFFFF',
       backgroundColor: '#FFFFFF',
-      borderRadius:30,
+      borderRadius:6,
       borderBottomWidth: 1,
-      width:250,
+      width:280,
       height:45,
-      marginBottom:20,
+      marginBottom:30,
       flexDirection: 'row',
       alignItems:'center'
   },
@@ -85,7 +81,9 @@ const styles = StyleSheet.create({
       height:45,
       marginLeft:16,
       borderBottomColor: '#FFFFFF',
+      backgroundColor: '#FFFFFF',
       flex:1,
+      borderRadius:6,
   },
   inputIcon:{
     width:30,
@@ -99,13 +97,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom:20,
-    width:250,
+    width:200,
     borderRadius:30,
   },
   loginButton: {
-    backgroundColor: "#00b5ec",
+    backgroundColor: "#25403B",
   },
   loginText: {
     color: 'white',
+    fontSize: 20,
+    fontFamily: "Quicksand-Bold"
+  },
+  forgotText: {
+    color:  "#25403B",
+    fontSize: 15,
+    fontFamily: "Quicksand-Bold"
+  },
+  titleText: {
+    color:  "#25403B",
+    fontSize: 40,
+    fontFamily: "Quicksand-Bold"
+  },
+  titleContainer:{
+    marginTop: -100,
+    marginBottom: 50,
   }
 });
