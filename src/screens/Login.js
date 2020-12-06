@@ -7,8 +7,12 @@ import {
   Button,
   TouchableHighlight,
   Image,
-  Alert
+  Alert,
+  ScrollView
 } from 'react-native';
+
+import { Actions } from 'react-native-router-flux';
+import HeaderBar from '../components/HeaderBar';
 class Login extends React.Component {
 
   constructor(props) {
@@ -21,38 +25,42 @@ class Login extends React.Component {
 
   onLogin = () => {
     Alert.alert("Alert", "Button presses Login");
+    Actions.menu();
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText} >Login</Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="Email"
-              keyboardType="email-address"
-              onChangeText={(email) => this.setState({email})}/>
-        </View>
-        
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="Password"
-              secureTextEntry={true}
-              onChangeText={(password) => this.setState({password})}/>
-        </View>
+        <HeaderBar titleHeader="Login" ></HeaderBar>
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.titleText} >Login</Text>
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput style={styles.inputs}
+                  placeholder="Email"
+                  keyboardType="email-address"
+                  onChangeText={(email) => this.setState({email})}/>
+            </View>
+          
+            <View style={styles.inputContainer}>
+              <TextInput style={styles.inputs}
+                  placeholder="Password"
+                  secureTextEntry={true}
+                  onChangeText={(password) => this.setState({password})}/>
+            </View>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onLogin()}>
-          <Text style={styles.forgotText} >Forgot password?</Text>
-        </TouchableHighlight>
+            <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onLogin()}>
+              <Text style={styles.forgotText} >Forgot password?</Text>
+            </TouchableHighlight>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableHighlight>
+            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
+              <Text style={styles.loginText}>Login</Text>
+            </TouchableHighlight>
 
-       
+        </ScrollView> 
       </View>
+
     );
   }
 }
@@ -62,9 +70,12 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#E2CEB2',
+  },
+  contentContainer: {
+    paddingTop: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E2CEB2',
   },
   inputContainer: {
       borderBottomColor: '#FFFFFF',
@@ -119,7 +130,7 @@ const styles = StyleSheet.create({
     fontFamily: "Quicksand-Bold"
   },
   titleContainer:{
-    marginTop: -100,
     marginBottom: 50,
+    marginTop: 100,
   }
 });

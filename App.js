@@ -8,9 +8,11 @@
 
 import React from 'react';
 import * as firebase from 'firebase';
-
-
 import Login from './src/screens/Login'
+import Menu from './src/screens/Menu'
+import { Router, Scene } from 'react-native-router-flux';
+import { StyleSheet, Text, View, Image } from 'react-native';
+
 const App: () => React$Node = () => {
   const firebaseConfig = {
     apiKey: "AIzaSyCLAn5CUU-Hd_pSUGcgfee7y8a0LRsGs4E",
@@ -27,10 +29,43 @@ const App: () => React$Node = () => {
   }
   return (
     <>
-      <Login></Login>
+      <Router navigationBarStyle={styles.navBar} titleStyle={styles.navTitle} sceneStyle={styles.routerScene}>
+      <Scene key="root" panHandlers={null}>
+        <Scene
+          key="login"
+          component={Login}
+          title="Login"
+          initial
+          hideNavBar={true}
+        />
+        <Scene
+          key="menu"
+          component={Menu}
+          title="Menu"
+          hideNavBar={true}
+        />
+      </Scene>
+    </Router>
     </>
   );
 };
 
 
 export default App;
+
+const styles = StyleSheet.create({
+  navBar: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#25403B',
+  },
+  navTitle: {
+    color: 'white',
+    fontFamily: "Quicksand-Bold"
+  },
+  routerScene: {
+    // paddingTop:20, // some navbar padding to avoid content overlap
+  },
+})
