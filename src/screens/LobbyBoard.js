@@ -8,38 +8,58 @@ import {
   TouchableHighlight,
   Image,
   Alert,
-  ImageBackground
+  SafeAreaView,
+  FlatList,
+  ImageBackground,
+  ScrollView
 } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 import HeaderBar from '../components/HeaderBar'
+import TableItem from '../components/TableItem'
+import * as firebase from 'firebase';
+
 class LobbyBoard extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      email   : '',
-      password: '',
+      listTable: []
     }
   }
 
   componentDidMount(){
-
+    firebase.database().ref('table').on('value',
+      (snapshot) => {
+        const tables = [];
+        snapshot.forEach( (doc) => {
+          tables.push({
+            key: doc.key,
+            name: doc.toJSON().name,
+            status: doc.toJSON().status
+          });
+          this.setState({
+            listTable: tables
+          })
+        });
+      });
   }
-
-  onLogin = () => {
-    Alert.alert("Alert", "Button presses Login");
-  }
-
+  
   render() {
     return (
       <View style={styles.container}>
-      <HeaderBar titleHeader="Lobby Board" hasGoBack={true} hasLogout={true}></HeaderBar>
-      <ImageBackground source={require("../assets/images/background.png")} style={styles.image} >
-       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-       <View><Text>LobbyBoard</Text></View>
-      </ScrollView>
-      </ImageBackground>
+        <HeaderBar titleHeader="Lobby Board" hasGoBack={true} hasLogout={true}></HeaderBar>
+        <ImageBackground source={require("../assets/images/background.png")} style={styles.image} >
+            <SafeAreaView style={styles.safeView}>
+              <FlatList
+                numColumns={3}
+                data={this.state.listTable}
+                renderItem={({ item }) => {
+                  return <TableItem table={item} key={item.key} />
+                }}
+                keyExtractor={(item) => item.name}
+              />
+            </SafeAreaView>
+        </ImageBackground>
       </View>
     );
   }
@@ -50,6 +70,10 @@ export default LobbyBoard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  safeView: {
+    flex: 1,
+    marginTop:70
   },
   contentContainer: {
     paddingTop: 30,
