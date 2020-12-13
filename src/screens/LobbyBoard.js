@@ -56,7 +56,7 @@ class LobbyBoard extends React.Component {
                 renderItem={({ item }) => {
                   return <TableItem table={item} key={item.key} />
                 }}
-                keyExtractor={(item) => item.name}
+                keyExtractor={(item) => item.key}
               />
             </SafeAreaView>
         </ImageBackground>

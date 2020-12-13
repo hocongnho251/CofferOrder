@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Dimensions  } from 'react-native';
 import * as firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 class TableItem extends React.Component {
 
   constructor(props) {
@@ -26,13 +27,17 @@ class TableItem extends React.Component {
   }
 
   orderDrink = (item) => {
-    console.log("KEY",item);
+    Actions.order();
   }
 
   render() {
     return (
      <View style={styles.container} >
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.orderDrink(this.props.table)}>
+        <TouchableHighlight
+          style={[styles.buttonContainer, styles.loginButton]}
+          onPress={() => this.orderDrink(this.props.table)}
+          disabled={this.props.table.status === 1 ? true: false} 
+        >
             <Text style={styles.tableText}>{this.props.table.name}</Text>
         </TouchableHighlight>
         

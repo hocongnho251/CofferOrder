@@ -13,6 +13,7 @@ import Menu from './src/screens/Menu'
 import { Router, Scene } from 'react-native-router-flux';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import LobbyBoard from './src/screens/LobbyBoard';
+import Order from './src/screens/Order'
 
 const App: () => React$Node = () => {
   const firebaseConfig = {
@@ -49,6 +50,12 @@ const App: () => React$Node = () => {
           key="lobby"
           component={LobbyBoard}
           title="Lobby Board"
+          hideNavBar={true}
+        />
+        <Scene
+          key="order"
+          component={Order}
+          title="Order"
           hideNavBar={true}
         />
       </Scene>
