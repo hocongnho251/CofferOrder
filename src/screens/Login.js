@@ -14,6 +14,7 @@ import {
 
 import { Actions } from 'react-native-router-flux';
 import HeaderBar from '../components/HeaderBar';
+import * as firebase from 'firebase';
 class Login extends React.Component {
 
   constructor(props) {
@@ -21,12 +22,17 @@ class Login extends React.Component {
     this.state = {
       email   : '',
       password: '',
+      errorMessage: ''
     }
   }
 
   onLogin = () => {
-    Alert.alert("Alert", "Button presses Login");
-    Actions.menu();
+    const { email, password } = this.state;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => Actions.menu())
+      .catch(error => this.setState({ errorMessage: error.message }))
   }
 
   render() {
@@ -50,7 +56,14 @@ class Login extends React.Component {
                   secureTextEntry={true}
                   onChangeText={(password) => this.setState({password})}/>
             </View>
-            <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onLogin()}>
+              {this.state.errorMessage !== '' ?
+              <Text style={styles.errorMessage}>
+                {this.state.errorMessage}
+              </Text>
+              :
+              null
+              }
+            <TouchableHighlight style={styles.buttonContainer}>
               <Text style={styles.forgotText} >Forgot password?</Text>
             </TouchableHighlight>
             <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
@@ -136,4 +149,8 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     justifyContent: "center"
   },
+  errorMessage: {
+    color: 'red',
+    width: 280
+  }
 });

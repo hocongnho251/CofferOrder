@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Alert,TouchableOpacity, Image, View, Text, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import * as firebase from 'firebase';
 
 class HeaderBar extends React.Component {
 
@@ -8,19 +9,15 @@ class HeaderBar extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-  }
-
-  componentDidCatch() {
-  }
-
-
   handleGoBack = () => {
     Actions.pop();
   }
 
   handleLogout = () => {
-    Alert.alert("Alert", "Button presses LOGOUT");
+    firebase.auth().signOut().then(() => {
+      Actions.login();
+      }, function(error) {
+    });
   }
 
 
