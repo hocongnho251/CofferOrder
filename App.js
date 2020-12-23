@@ -37,7 +37,6 @@ const App: () => React$Node = () => {
           key="login"
           component={Login}
           title="Login"
-          initial
           hideNavBar={true}
         />
         <Scene
@@ -48,6 +47,7 @@ const App: () => React$Node = () => {
         />
         <Scene
           key="lobby"
+          initial
           component={LobbyBoard}
           title="Lobby Board"
           hideNavBar={true}

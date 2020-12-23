@@ -19,13 +19,15 @@ import HeaderBar from '../components/HeaderBar';
 import * as firebase from 'firebase';
 import { Dimensions  } from 'react-native';
 import OrderItem from '../components/OrderItem';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+var orders=[];
 
 class Order extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      listMenu: []
+      listMenu: [],
     }
   }
 
@@ -37,12 +39,37 @@ class Order extends React.Component {
           menus.push({
             key: doc.key,
             name: doc.toJSON().name,
+            price: doc.toJSON().price
           });
           this.setState({
             listMenu: menus
           })
         });
       });
+  }
+
+  onSubmit = async() => {
+    var key = this.props.table_id;
+    const uniqueSet = new Set(orders);
+    var items = [...uniqueSet];
+    items.forEach(item => {
+        item.forEach(order => {
+          var payload = {
+            price: order.price,
+            quantity: order.quantity
+          }
+          firebase.database().ref("table/"+key+"/order/"+order.name).set(payload)
+            .then(data => {
+               firebase.database().ref("table/"+key).update({status: 1})
+            })
+    });
+  });
+    items=[];
+    Actions.lobby();
+  }
+
+  listOrder = (data) => {
+    orders.push(data)
   }
 
   render() {
@@ -58,12 +85,12 @@ class Order extends React.Component {
               <FlatList
                 data={this.state.listMenu}
                 renderItem={({ item }) => {
-                  return <OrderItem menu={item} key={item.key} />
+                  return <OrderItem menu={item} key={item.key} listOrder={this.listOrder} />
                 }}
                 keyExtractor={(item) => item.key}
               />
             </SafeAreaView>
-            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
+            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onSubmit()}>
               <Text style={styles.loginText}>Order</Text>
             </TouchableHighlight>
       </View>
@@ -89,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius:6,
     borderBottomWidth: 1,
-    width:Dimensions.get('window').width - 20,
+    width:Dimensions.get('window').width,
     marginBottom:30,
     height:45,
     alignItems:'center',

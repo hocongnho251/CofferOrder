@@ -27,7 +27,7 @@ class TableItem extends React.Component {
   }
 
   orderDrink = (item) => {
-    Actions.order();
+    Actions.order({table_id: this.props.table.key});
   }
 
   render() {
