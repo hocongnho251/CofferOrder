@@ -31,6 +31,9 @@ class Menu extends React.Component {
     Actions.lobby();
   }
 
+  goToCashierBoard(){
+    Actions.cashier();
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -49,7 +52,7 @@ class Menu extends React.Component {
             <Text style={styles.loginText}>Lobby Board</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.goToCashierBoard()}>
          <View style={styles.titleButton}>
             <Image
               source={require('../assets/images/icon-cashier.png')}

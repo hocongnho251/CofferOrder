@@ -56,15 +56,17 @@ class Order extends React.Component {
         item.forEach(order => {
           var payload = {
             price: order.price,
-            quantity: order.quantity
+            quantity: order.quantity,
+            name: order.name
           }
-          firebase.database().ref("table/"+key+"/order/"+order.name).set(payload)
+          firebase.database().ref("table/"+key+"/order/").push(payload)
             .then(data => {
                firebase.database().ref("table/"+key).update({status: 1})
             })
     });
   });
     items=[];
+    alert('Order success');
     Actions.lobby();
   }
 
