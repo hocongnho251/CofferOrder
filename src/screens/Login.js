@@ -28,11 +28,17 @@ class Login extends React.Component {
 
   onLogin = () => {
     const { email, password } = this.state;
-    firebase
+    try {
+      firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => Actions.menu())
       .catch(error => this.setState({ errorMessage: error.message }))
+      
+    } catch (error) {
+      
+    }
+    
   }
 
   render() {

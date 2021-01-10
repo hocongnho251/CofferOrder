@@ -15,6 +15,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import LobbyBoard from './src/screens/LobbyBoard';
 import Order from './src/screens/Order';
 import CashierBoard from './src/screens/CashierBoard';
+import MenuSetting from './src/screens/MenuSetting'
 
 
 const App: () => React$Node = () => {
@@ -36,13 +37,13 @@ const App: () => React$Node = () => {
       <Router navigationBarStyle={styles.navBar} titleStyle={styles.navTitle} sceneStyle={styles.routerScene}>
       <Scene key="root" panHandlers={null}>
         <Scene
+          initial
           key="login"
           component={Login}
           title="Login"
           hideNavBar={true}
         />
         <Scene
-          initial
           key="menu"
           component={Menu}
           title="Menu"
@@ -64,6 +65,12 @@ const App: () => React$Node = () => {
           key="cashier"
           component={CashierBoard}
           title="Cashier Board"
+          hideNavBar={true}
+        />
+        <Scene
+          key="menu_setting"
+          component={MenuSetting}
+          title="Menu Setting"
           hideNavBar={true}
         />
       </Scene>

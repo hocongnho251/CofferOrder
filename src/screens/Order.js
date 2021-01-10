@@ -65,9 +65,10 @@ class Order extends React.Component {
             })
     });
   });
-    items=[];
+    orders=[];
     alert('Order success');
     Actions.lobby();
+    
   }
 
   listOrder = (data) => {

@@ -14,13 +14,32 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 
 import HeaderBar from '../components/HeaderBar'
+import * as firebase from 'firebase';
 class Menu extends React.Component {
 
-  constructor(props) {
+  constructor(props){
     super(props);
     this.state = {
-      email   : '',
-      password: '',
+      isAdmin: false,
+    }
+  }
+
+  componentDidMount = async() =>{
+    var user =  firebase.auth().currentUser;
+    var isAdmin = false;
+    try {
+      await firebase.database().ref('account/').once('value', function (snapshot) {
+        snapshot.forEach( (doc) => {
+          if(doc.toJSON().username === user.email){
+            if(doc.toJSON().role == 1){
+              isAdmin = true;
+            }
+          }
+        })
+      });
+      this.setState({isAdmin: isAdmin})
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -31,8 +50,12 @@ class Menu extends React.Component {
     Actions.lobby();
   }
 
-  goToCashierBoard(){
+  goToCashierBoard = () => {
     Actions.cashier();
+  }
+
+  goToMenuSetting = () => {
+    Actions.menu_setting();
   }
   render() {
     return (
@@ -52,24 +75,33 @@ class Menu extends React.Component {
             <Text style={styles.loginText}>Lobby Board</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.goToCashierBoard()}>
-         <View style={styles.titleButton}>
-            <Image
-              source={require('../assets/images/icon-cashier.png')}
-              style={styles.iconMenu} resizeMode="contain"
-            />
-            <Text style={styles.loginText}>Cashier Board</Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLogin()}>
-           <View style={styles.titleButton}>
-            <Image
-              source={require('../assets/images/icon-setting.png')}
-              style={styles.iconMenu} resizeMode="contain"
-            />
-            <Text style={styles.loginText}>Menu Setting</Text>
-          </View>
-        </TouchableHighlight>
+        {
+          this.state.isAdmin == true ?
+            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.goToCashierBoard()}>
+              <View style={styles.titleButton}>
+                <Image
+                  source={require('../assets/images/icon-cashier.png')}
+                  style={styles.iconMenu} resizeMode="contain"
+                />
+                <Text style={styles.loginText}>Cashier Board</Text>
+              </View>
+            </TouchableHighlight>
+        : 
+        null
+        }
+        {
+          this.state.isAdmin == true ?
+            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.goToMenuSetting()}>
+              <View style={styles.titleButton}>
+                <Image
+                  source={require('../assets/images/icon-setting.png')}
+                  style={styles.iconMenu} resizeMode="contain"
+                />
+                <Text style={styles.loginText}>Menu Setting</Text>
+              </View>
+            </TouchableHighlight>
+        : null
+        }
       </ScrollView>
       </ImageBackground>
       </View>
@@ -125,5 +157,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-  }
+  },
+  
 });
